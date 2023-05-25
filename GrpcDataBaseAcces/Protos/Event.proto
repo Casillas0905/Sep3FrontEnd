@@ -1,0 +1,26 @@
+﻿syntax = "proto3";
+
+package GrpcClasses.Event;
+
+service Events {
+  rpc findAllEvents (Empty) returns (stream EventModel);
+  rpc findById (EventIdRequest) returns (EventModel);
+  rpc saveEvent (EventModel) returns (Empty);
+  rpc updateEvent (EventModel) returns (Empty);
+  rpc deleteEvent (EventIdRequest) returns (Empty);
+}
+
+message EventModel {
+  int32 id = 1;
+  string title = 2;
+  string description = 3;
+  int32 madeById = 4;
+}
+
+message EventIdRequest {
+  int32 id = 1;
+}
+
+message Empty {
+
+}

@@ -1,0 +1,53 @@
+syntax= "proto3";
+
+package GrpcClasses.User;
+
+service UserGrpc{
+  rpc saveUser(UserModel) returns (Empty){}
+  rpc findById(GetById) returns (UserModel){}
+  rpc findAll(Empty) returns (stream UserModel){}
+  rpc updateUser(UserModel) returns (Empty){}
+  rpc deleteUser(GetById) returns (Empty){}
+  rpc findByUsername(GetByUsername) returns (UserModel){}
+}
+
+message UserModel {
+  int32 id = 1;
+  string username = 2;
+  string password = 3;
+  string email = 4;
+  string first_name = 5;
+  string last_name = 6;
+  string birthday = 7;
+  string description = 8;
+  int32 number_of_matches = 9;
+  string note = 10;
+  string photo1 = 11;
+  string photo2 = 12;
+  string photo3 = 13;
+  string photo4 = 14;
+  string photo5 = 15;
+  string gender = 16;
+  string preference = 17;
+  string horoscope = 18;
+  string occupation = 19;
+  string city = 20;
+  string education = 21;
+  bool drink = 22;
+  bool administrator = 23;
+}
+
+message GetById{
+  int32 id=1;
+}
+
+message GetByUsername{
+  string username=1;
+}
+
+message GetByGender{
+  string gender=1;
+}
+
+message Empty{
+}

@@ -1,0 +1,37 @@
+{
+  "Users": [
+    {
+      "Id": 1,
+      "UserName": "iker0905",
+      "Password": "Iker2003",
+      "Email": "iker@gmail",
+      "Name": "Iker",
+      "SecurityLevel": 0
+    },
+    {
+      "Id": 2,
+      "UserName": "iker090503",
+      "Password": "Iker2003",
+      "Email": "iker@gmail",
+      "Name": "Iker",
+      "SecurityLevel": 0
+    },
+    {
+      "Id": 3,
+      "UserName": "iker090502",
+      "Password": "Iker2003",
+      "Email": "iker@gmail",
+      "Name": "Iker",
+      "SecurityLevel": 0
+    }
+  ],
+  "Posts": [],
+  "AnswerMessages": [
+    {
+      "OwnerId": 1,
+      "id": 1,
+      "message": "te llamas jose",
+      "postOwnerid": 1
+    }
+  ]
+}

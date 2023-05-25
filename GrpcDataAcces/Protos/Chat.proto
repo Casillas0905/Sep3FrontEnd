@@ -1,0 +1,27 @@
+syntax = "proto3";
+package GrpcClasses;
+
+service Chats {
+  rpc findById (lookUpById) returns (ChatModel);
+  rpc saveChat (ChatModel) returns (Empty);
+  rpc deleteChat(lookUpById) returns (Empty);
+  rpc findByUserId (lookUpByUserId) returns (ChatModel);
+}
+
+message ChatModel{
+  int32 id = 1;
+  int32 userId1 = 2;
+  int32 userId2 = 3;
+}
+
+message lookUpById{
+  int32 id = 1;
+}
+
+message lookUpByUserId{
+  int32 userId = 1;
+}
+
+message Empty{
+
+}
