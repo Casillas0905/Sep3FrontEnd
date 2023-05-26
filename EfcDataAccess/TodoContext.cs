@@ -6,7 +6,7 @@ namespace EfcDataAccess;
 
 public class TodoContext : DbContext
 {
-    public DbSet<User> Users { get; set; }
+    
     public DbSet<Post> Posts { get; set; }
     public DbSet<AnswerMessage> AnswerMessages { get; set; }
 
@@ -18,7 +18,6 @@ public class TodoContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Post>().HasKey(post => post.Id);
-        modelBuilder.Entity<User>().HasKey(user => user.Id);
         modelBuilder.Entity<AnswerMessage>().HasKey(answerMessage => answerMessage.id);
     }
 }
