@@ -8,14 +8,8 @@ namespace Application.Logic;
 
 public class UserLogic : IUserLogic
 {
-    private readonly IUserDao userDao;
-    UserGrpcService Service= new UserGrpcService();
     
-
-    /*public UserLogic(UserGrpcService service)
-    {
-        Service = service;
-    }*/
+    UserGrpcService Service= new UserGrpcService();
 
     public UserLogic()
     {
@@ -45,7 +39,7 @@ public class UserLogic : IUserLogic
         Service.saveUser(userDomainModel);
     }
 
-    public Task<IEnumerable<User>> GetAllUsers()
+    public Task<IEnumerable<UserDomainModel>> GetAllUsers()
     {
         throw new NotImplementedException();
     }

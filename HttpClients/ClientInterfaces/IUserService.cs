@@ -5,6 +5,6 @@ namespace HttpClients.ClientInterfaces;
 
 public interface IUserService
 {
-    Task<User> Create(UserDomainModel dto);
-    Task<IEnumerable<User>> GetUsers(string? usernameContains = null);
+    Task<UserDomainModel> Create(UserDomainModel dto);
+    Task<IEnumerable<UserDomainModel>> GetUsers(string? usernameContains = null);
 }

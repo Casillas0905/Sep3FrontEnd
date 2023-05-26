@@ -25,7 +25,7 @@ public class PostEfcDao : IPostDao
 
     public async Task<IEnumerable<Post>> GetAsync(SearchPostParametersDto searchParameters)
     {
-        IQueryable<Post> query = context.Posts.Include(post => post.Owner).AsQueryable();
+        /*IQueryable<Post> query = context.Posts.Include(post => post.Owner).AsQueryable();
         
         if (!string.IsNullOrEmpty(searchParameters.Username))
         {
@@ -46,7 +46,8 @@ public class PostEfcDao : IPostDao
         }
 
         List<Post> result = await query.ToListAsync();
-        return result;
+        return result;*/
+        throw new NotImplementedException();
     }
 
     public async Task UpdateAsync(Post post)
@@ -57,11 +58,12 @@ public class PostEfcDao : IPostDao
 
     public async Task<Post?> GetByIdAsync(int postId)
     {
-        Post? found = await context.Posts
+        /*Post? found = await context.Posts
             .AsNoTracking()
             .Include(post => post.Owner)
             .SingleOrDefaultAsync(post => post.Id == postId);
-        return found;
+        return found;*/
+        throw new NotImplementedException();
     }
 
     public async Task DeleteAsync(int id)

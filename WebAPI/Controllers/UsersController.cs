@@ -17,7 +17,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost,Route("create")]
-    public async Task<ActionResult<User>> CreateAsync(UserDomainModel dto)
+    public async Task<ActionResult<UserDomainModel>> CreateAsync(UserDomainModel dto)
     {
         try
         {
@@ -34,7 +34,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<User>>> GetAsync([FromQuery] string? username)
+    public async Task<ActionResult<IEnumerable<UserDomainModel>>> GetAsync([FromQuery] string? username)
     {
         try
         {

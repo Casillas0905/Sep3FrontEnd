@@ -16,7 +16,7 @@ public class UserHttpClient : IUserService
         this.client = client;
     }
 
-    public async Task<User> Create(UserDomainModel dto)
+    public async Task<UserDomainModel> Create(UserDomainModel dto)
     {
         Console.WriteLine("CreateAsync method called");
         HttpResponseMessage response = await client.PostAsJsonAsync("https://localhost:7093/Users/create", dto);
@@ -26,11 +26,11 @@ public class UserHttpClient : IUserService
             throw new Exception(result);
         }
 
-        User user = JsonSerializer.Deserialize<User>(result)!;
+        UserDomainModel user = JsonSerializer.Deserialize<UserDomainModel>(result)!;
         return user;
     }
     
-    public async Task<IEnumerable<User>> GetUsers(string? usernameContains = null)
+    public async Task<IEnumerable<UserDomainModel>> GetUsers(string? usernameContains = null)
     {
         string uri = "/users";
         if (!string.IsNullOrEmpty(usernameContains))
@@ -44,7 +44,7 @@ public class UserHttpClient : IUserService
             throw new Exception(result);
         }
 
-        IEnumerable<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(result, new JsonSerializerOptions
+        IEnumerable<UserDomainModel> users = JsonSerializer.Deserialize<IEnumerable<UserDomainModel>>(result, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
