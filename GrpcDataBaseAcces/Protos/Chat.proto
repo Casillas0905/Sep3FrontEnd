@@ -6,7 +6,7 @@ service Chats {
   rpc findById (lookUpById) returns (ChatModel);
   rpc saveChat (ChatModel) returns (Empty);
   rpc deleteChat(lookUpById) returns (Empty);
-  rpc findByUserId (lookUpByUserId) returns (ChatModel);
+  rpc findByUserId (lookUpByUserId) returns (stream ChatModel);
 }
 
 message ChatModel{

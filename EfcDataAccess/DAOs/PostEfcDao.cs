@@ -23,7 +23,7 @@ public class PostEfcDao : IPostDao
         return added.Entity;
     }
 
-    public async Task<IEnumerable<Post>> GetAsync(SearchPostParametersDto searchParameters)
+    public async Task<IEnumerable<Post>> GetAsync()
     {
         /*IQueryable<Post> query = context.Posts.Include(post => post.Owner).AsQueryable();
         

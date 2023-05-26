@@ -5,6 +5,7 @@ namespace GrpcDataBaseAcces.GrpcServices;
 
 public class MessageGrpcService : IMessageGrpcService
 {
+    
     public MessageDomainModel findById(int id)
     {
         throw new NotImplementedException();

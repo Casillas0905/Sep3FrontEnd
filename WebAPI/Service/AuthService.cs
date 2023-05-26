@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Application.LogicInterfaces;
-using Domain.DTOs;
 using Domain.Models;
 
 namespace WebAPI.Service;
