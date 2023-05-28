@@ -13,17 +13,6 @@ public class UserLogic : IUserLogic
     {
     }
     
-    private static void ValidateData(UserDomainModel userDomainModel)
-    {
-        string userName = userDomainModel.Username;
-
-        if (userName.Length < 3)
-            throw new Exception("Username must be at least 3 characters!");
-
-        if (userName.Length > 15)
-            throw new Exception("Username must be less than 16 characters!");
-    }
-
     public void saveAsync(UserDomainModel userDomainModel)
     {
         UserDomainModel? existing = Service.findByUsername(userDomainModel.Username);

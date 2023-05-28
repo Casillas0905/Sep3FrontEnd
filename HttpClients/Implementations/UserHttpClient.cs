@@ -30,7 +30,7 @@ public class UserHttpClient : IUserService
         return user;
     }
     
-    /*public async Task<UserDomainModel> findByUsername(string username)
+    public async Task<UserDomainModel> findByUsername(string username)
     {
         Console.WriteLine("1");
         HttpResponseMessage response = await client.GetAsync($"https://localhost:7093/Users/findByUserName/{username}");
@@ -45,7 +45,7 @@ public class UserHttpClient : IUserService
         UserDomainModel user = JsonSerializer.Deserialize<UserDomainModel>(content)!;
         Console.WriteLine("Carlos id:"+user.Id);
         return user;
-    }*/
+    }
     
     public async Task<IEnumerable<UserDomainModel>> GetUsers(string? usernameContains = null)
     {

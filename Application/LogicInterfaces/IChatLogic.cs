@@ -1,6 +1,11 @@
-﻿namespace Application.LogicInterfaces;
+﻿using Domain.Models;
 
-public class IChatLogic
+namespace Application.LogicInterfaces;
+
+public interface IChatLogic
 {
-    
+    public ChatDomainModel findById(int id);
+    public void saveChat(ChatDomainModel chatDomainModel);
+    public void deleteChat(int id);
+    public Task<IEnumerable<ChatDomainModel>> findByUserId(int id);
 }

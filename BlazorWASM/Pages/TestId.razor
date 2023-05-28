@@ -40,6 +40,9 @@
     
     private async Task GetUserData()
     {
+        Console.WriteLine("iker2");
+        
+        
         AuthenticationState authState = await AuthState;
         ClaimsPrincipal user1 = authState.User;
         bool isLoggedIn = user1.Identity != null;
@@ -48,13 +51,24 @@
 
         string name = user1.Identity!.Name;
         username = name;
-        userDomain = userService.GetUsers(username);
-        IEnumerable<UserDomainModel> users = await userDomain;
-        UserDomainModel user = users.FirstOrDefault();
-        if (user != null)
+        Console.WriteLine("1");
+       
+        
+        Console.WriteLine("2");
+        
+        UserDomainModel users = await userService.findByUsername(username);
+        username2 = "iker2";
+        Console.WriteLine("3");
+        Console.WriteLine("4");
+        if (users != null)
         {
-            userId = user.Id;
-            username2 = user.Username;
+            userId = users.Id;
+            username2 = users.Username;
+        }
+        else
+        {
+            userId = 4;
+            username2 = "me jodieron";
         }
     }
 }

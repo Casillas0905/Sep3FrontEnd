@@ -19,7 +19,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IMatchLogic, MatchLogic>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-
+builder.Services.AddScoped<IMessageLogic, MessageLogic>();
+builder.Services.AddScoped<IEventLogic, EventLogic>();
+builder.Services.AddScoped<IUserInEventLogic, UserInEventLogic>();
+builder.Services.AddScoped<IChatLogic, ChatLogic>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.RequireHttpsMetadata = false;
