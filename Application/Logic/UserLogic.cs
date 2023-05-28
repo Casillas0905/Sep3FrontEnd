@@ -1,5 +1,4 @@
-﻿using Application.DaoInterfaces;
-using Application.LogicInterfaces;
+﻿using Application.LogicInterfaces;
 using Domain.Models;
 using GrpcDataBaseAcces.GrpcServices;
 
@@ -40,12 +39,18 @@ public class UserLogic : IUserLogic
 
     public Task<IEnumerable<UserDomainModel>> GetAllUsers()
     {
-        throw new NotImplementedException();
+        return Service.getAllUsers();
     }
 
     public UserDomainModel findById(int id)
     {
-        throw new NotImplementedException();
+        UserDomainModel? existing = Service.findById(id);
+        if (existing.Username.Equals("niull"))
+        {
+            Console.WriteLine("User not found");
+            throw new Exception("Username not found");
+        }
+        return existing;
     }
 
     public async Task<UserDomainModel> findByUsername(string username)
@@ -57,17 +62,28 @@ public class UserLogic : IUserLogic
             Console.WriteLine("User not found");
             throw new Exception("Username not found");
         }
-
         return existing;
     }
 
     public void updateUser(UserDomainModel userDomainModel)
     {
-        throw new NotImplementedException();
+        UserDomainModel? existing = Service.findById(userDomainModel.Id);
+        if (existing.Username.Equals("niull"))
+        {
+            Console.WriteLine("User not found");
+            throw new Exception("Username not found");
+        }
+        Service.updateUser(userDomainModel);
     }
 
     public void deleteUser(int id)
     {
-        throw new NotImplementedException();
+        UserDomainModel? existing = Service.findById(id);
+        if (existing.Username.Equals("niull"))
+        {
+            Console.WriteLine("User not found");
+            throw new Exception("Username not found");
+        }
+        Service.deleteUser(id);
     }
 }

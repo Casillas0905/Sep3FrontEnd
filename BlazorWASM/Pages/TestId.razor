@@ -1,0 +1,60 @@
+﻿@page "/Test"
+@using HttpClients.ClientInterfaces
+@using Domain.Models
+@using System.Security.Claims
+@inject IUserService userService
+@attribute [Authorize]
+
+<button class="btn btn-primary" @onclick="GetUserData">Get User Data</button>
+<p>Logged-in User ID: @userId</p>
+<p>UserName: @username2</p>
+<p>UserName: @username</p>
+
+<div class="boton-centrado">
+    <a href="#top">Go up</a>
+</div>
+
+@code {
+    private Task<IEnumerable<UserDomainModel>> userDomain;
+    private int userId;
+    private string username;
+    private string username2;
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+
+    /*protected override async Task OnInitializedAsync()
+    {
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user1 = authState.User;
+        bool isLoggedIn = user1.Identity != null;
+
+        if (!isLoggedIn) return;
+
+        string name = user1.Identity!.Name;
+        username = name;
+        userDomain = userService.findById(43);
+        UserDomainModel user = await userDomain;
+        userId = user.Id;
+    }*/
+    
+    private async Task GetUserData()
+    {
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user1 = authState.User;
+        bool isLoggedIn = user1.Identity != null;
+
+        if (!isLoggedIn) return;
+
+        string name = user1.Identity!.Name;
+        username = name;
+        userDomain = userService.GetUsers(username);
+        IEnumerable<UserDomainModel> users = await userDomain;
+        UserDomainModel user = users.FirstOrDefault();
+        if (user != null)
+        {
+            userId = user.Id;
+            username2 = user.Username;
+        }
+    }
+}

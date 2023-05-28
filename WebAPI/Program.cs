@@ -1,9 +1,6 @@
 using System.Text;
-using Application.DaoInterfaces;
 using Application.Logic;
 using Application.LogicInterfaces;
-using EfcDataAccess;
-using EfcDataAccess.DAOs;
 using GrpcDataBaseAcces.GrpcServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -19,14 +16,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IUserDao, UserEfcDao>();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
-builder.Services.AddScoped<IMessageLogic, MessageLogic>();
-builder.Services.AddScoped<IMessageDao, MessageEfcDao>();
-builder.Services.AddScoped<IPostDao, PostEfcDao>();
-builder.Services.AddScoped<IPostLogic, PostLogic>();
+builder.Services.AddScoped<IMatchLogic, MatchLogic>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddDbContext<TodoContext>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

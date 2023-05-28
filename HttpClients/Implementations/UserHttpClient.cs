@@ -30,6 +30,23 @@ public class UserHttpClient : IUserService
         return user;
     }
     
+    /*public async Task<UserDomainModel> findByUsername(string username)
+    {
+        Console.WriteLine("1");
+        HttpResponseMessage response = await client.GetAsync($"https://localhost:7093/Users/findByUserName/{username}");
+        Console.WriteLine("2");
+        string content = await response.Content.ReadAsStringAsync();
+        Console.WriteLine("3");
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
+        Console.WriteLine("4");
+        UserDomainModel user = JsonSerializer.Deserialize<UserDomainModel>(content)!;
+        Console.WriteLine("Carlos id:"+user.Id);
+        return user;
+    }*/
+    
     public async Task<IEnumerable<UserDomainModel>> GetUsers(string? usernameContains = null)
     {
         string uri = "/users";
@@ -49,5 +66,22 @@ public class UserHttpClient : IUserService
             PropertyNameCaseInsensitive = true
         })!;
         return users;
+    }
+    
+    public async Task<UserDomainModel> findById(int id)
+    {
+        Console.WriteLine("1");
+        HttpResponseMessage response = await client.GetAsync($"https://localhost:7093/Users/findByUserId/{id}");
+        Console.WriteLine("2");
+        string content = await response.Content.ReadAsStringAsync();
+        Console.WriteLine("3");
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
+        Console.WriteLine("4");
+        UserDomainModel user = JsonSerializer.Deserialize<UserDomainModel>(content)!;
+        Console.WriteLine("Carlos id:"+user.Id);
+        return user;
     }
 }

@@ -34,6 +34,40 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
+    [Route("findByUserName")]
+    public async Task<ActionResult<UserDomainModel>> GetByUsernameAsync([FromQuery] string username)
+    {
+        Console.WriteLine("find called");
+        try
+        {
+            UserDomainModel user = await userLogic.findByUsername(username);
+            return Ok(user);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpGet]
+    [Route("findByUserId")]
+    public async Task<ActionResult<UserDomainModel>> GetById([FromQuery] int id)
+    {
+        Console.WriteLine("find called");
+        try
+        {
+            UserDomainModel user = userLogic.findById(id);
+            return Ok(user);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpGet]
     public async Task<ActionResult<IEnumerable<UserDomainModel>>> GetAsync([FromQuery] string? username)
     {
         try

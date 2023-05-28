@@ -13,10 +13,10 @@ service Matches {
 message MatchModel {
   int32 id = 1;
   int32 userId1 = 2;
-  bool matchUser1 = 3;
+  string matchUser1 = 3;
   int32 userId2 = 4;
-  bool matchUser2 = 5;
-  bool match = 6;
+  string matchUser2 = 5;
+  string match = 6;
 }
 
 message MatchIdRequest {
@@ -28,7 +28,7 @@ message UserIdRequest {
 }
 
 message MatchResult {
-  bool match = 1;
+  string match = 1;
 }
 
 message UserModel {

@@ -3,17 +3,17 @@
 public class MatchDomainModel
 {
     public int id { get; set; }
-    public bool matchUser1{ get; set; }
+    public string matchUser1{ get; set; }
     public int userid1{ get; set; }
-    public bool matchUser2{ get; set; }
+    public string matchUser2{ get; set; }
     public int userid2{ get; set; }
-    public bool match{ get; set; }
+    public string match{ get; set; }
 
     public MatchDomainModel()
     {
     }
 
-    public MatchDomainModel(int id, bool matchUser1, int userid1, bool matchUser2, int userid2, bool match)
+    public MatchDomainModel(int id, string matchUser1, int userid1, string matchUser2, int userid2, string match)
     {
         this.id = id;
         this.matchUser1 = matchUser1;

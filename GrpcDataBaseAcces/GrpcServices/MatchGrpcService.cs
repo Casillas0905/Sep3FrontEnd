@@ -28,7 +28,7 @@ public class MatchGrpcService : IMatchGrpcService
             UserId1 = match.userid1,
             UserId2 = match.userid2,
             MatchUser1 = match.matchUser1,
-            MatchUser2 = match.matchUser1,
+            MatchUser2 = match.matchUser2,
             Match = match.match
         };
         client.updateMatch(matchModel);
