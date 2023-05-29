@@ -53,7 +53,7 @@ public class UserInEventsController : ControllerBase
     {
         try
         {
-            Task<IEnumerable<UserDomainModel>> users = userInEventLogic.findAllUsersForOneEvent(id);
+            IEnumerable<UserDomainModel> users = await userInEventLogic.findAllUsersForOneEvent(id);
             return Ok(users);
         }
         catch (Exception e)

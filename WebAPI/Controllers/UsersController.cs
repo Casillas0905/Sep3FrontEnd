@@ -51,8 +51,8 @@ public class UsersController : ControllerBase
     }
     
     [HttpGet]
-    [Route("findByUserId")]
-    public async Task<ActionResult<UserDomainModel>> GetById([FromQuery] int id)
+    [Route("findByUserId/{id}")]
+    public async Task<ActionResult<UserDomainModel>> GetById([FromRoute] int id)
     {
         Console.WriteLine("find called");
         try

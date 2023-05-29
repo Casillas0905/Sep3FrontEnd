@@ -16,14 +16,17 @@ public class MatchHttpClient : IMatchService
     
     public async Task<MatchDomainModel> findById(int id)
     {
-        HttpResponseMessage response = await client.GetAsync($"https://localhost:7093/Match/findById{id}");
-        string content = await response.Content.ReadAsStringAsync();
+        HttpResponseMessage response = await client.GetAsync($"https://localhost:7093/Match/findById/{id}");
+        string result = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception(content);
+            throw new Exception(result);
         }
 
-        MatchDomainModel match = JsonSerializer.Deserialize<MatchDomainModel>(content)!;
+        MatchDomainModel match = JsonSerializer.Deserialize<MatchDomainModel>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
         return match;
     }
 
@@ -52,12 +55,18 @@ public class MatchHttpClient : IMatchService
     public async Task<IEnumerable<MatchDomainModel>> findByUserId(int id)
     {
         HttpResponseMessage response = await client.GetAsync($"https://localhost:7093/Match/findByUserId{id}");
-        string content = await response.Content.ReadAsStringAsync();
+        string result = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception(content);
+            throw new Exception(result);
         }
-        IEnumerable<MatchDomainModel> match = JsonSerializer.Deserialize<IEnumerable<MatchDomainModel>>(content)!;
-        return match;
+
+        IEnumerable<MatchDomainModel> matchs = JsonSerializer.Deserialize<IEnumerable<MatchDomainModel>>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+
+        MatchDomainModel firstMatch = matchs.FirstOrDefault();
+        return matchs;
     }
 }

@@ -31,8 +31,8 @@ public class MatchController : ControllerBase
         }
     }
     
-    [HttpGet, Route("findById")]
-    public async Task<ActionResult<MatchDomainModel>> GetByIdAsync([FromQuery] int id)
+    [HttpGet, Route("findById/{id}")]
+    public async Task<ActionResult<MatchDomainModel>> GetById([FromRoute] int id)
     {
         try
         {
@@ -46,12 +46,12 @@ public class MatchController : ControllerBase
         }
     }
     
-    [HttpGet, Route("findByUserId")]
-    public async Task<ActionResult<IEnumerable<MatchDomainModel>>> GetByUserIdAsync([FromQuery] int id)
+    [HttpGet, Route("findByUserId/{id}")]
+    public async Task<ActionResult<IEnumerable<MatchDomainModel>>> GetByUserIdAsync([FromRoute] int id)
     {
         try
         {
-           Task<IEnumerable<MatchDomainModel>> match = matchLogic.findByUserId(id);
+           IEnumerable<MatchDomainModel> match = await matchLogic.findByUserId(id);
             return Ok(match);
         }
         catch (Exception e)

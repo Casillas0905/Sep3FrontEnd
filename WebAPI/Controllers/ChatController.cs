@@ -35,7 +35,7 @@ public class ChatController : ControllerBase
     {
         try
         {
-            Task<IEnumerable<ChatDomainModel>> chat = chatLogic.findByUserId(id);
+            IEnumerable<ChatDomainModel> chat = await chatLogic.findByUserId(id);
             return Ok(chat);
         }
         catch (Exception e)

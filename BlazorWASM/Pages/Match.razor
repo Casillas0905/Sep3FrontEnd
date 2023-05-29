@@ -5,82 +5,20 @@
 @inject IMatchService matchSevice
 @inject IUserService userService
 @attribute [Authorize]
-<div id="myCarousel" class="carousel" data-bs-ride="carousel">
-    <div class="carousel-inner"> <!-- Wrapper for slides -->
-      <div class="carousel-item active">
-        <img class="d-block img-fluid mx-auto" src= "https://img.myloview.com/stickers/chico-joven-con-barba-en-restaurante-de-hamburguesas-400-229147499.jpg" alt="elephant">
-      </div>
-      <div class="carousel-item">
-        <img class="d-block img-fluid mx-auto" src="https://img.myloview.com/stickers/chico-joven-atractivo-bebiendo-de-vaso-rojo-en-una-barbacoa-por-el-dia-de-la-independencia-de-estados-unidos-el-4-de-julio-400-255627794.jpg" alt="tiger">
-      </div>
-      <div class="carousel-item">
-        <img class="d-block img-fluid mx-auto" src="https://img.myloview.com/stickers/joven-con-taza-de-cafe-trabajando-en-el-ordenador-junto-a-la-ventana-400-222626754.jpg" alt="giraffe">
-      </div>
-    </div>
-    <ul class="carousel-indicators"> <!-- Indicators -->
-      <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
-      <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
-      <li data-bs-target="#myCarousel" data-bs-slide-to="2"></li>
-    </ul>
-  </div>
 
-  
-  <div class="note">
-    <textarea class="note-text"  @bind="note" placeholder="Note..."></textarea>
-  </div>
-
-
-  <div class="descripcion">
-    <h3>Me:</h3>
+<p>Logged-in User ID: @userId</p>
+<p>User to mkatch: @userTomatch</p>
+<textarea class="note-text"  @bind="note" placeholder="Note..."></textarea>
+  <h3>Me:</h3>
     <textarea  @bind="name" placeholder="What make you interesting?"></textarea>
     <textarea  @bind="lastname" placeholder="What make you interesting?"></textarea>
-  </div>
-
-<div class="center">
-  <img src=" https://media.istockphoto.com/id/1200677760/es/foto/retrato-de-apuesto-joven-sonriente-con-los-brazos-cruzados.jpg?s=612x612&w=0&k=20&c=RhKR8pxX3y_YVe5CjrRnTcNFEGDryD2FVOcUT_w3m4w=" alt="Texto alternativo de la imagen" class="img-size" >
-  </div>
-
-  <div class="about">
-    <h3>About:</h3>
+  <h3>About:</h3>
     <textarea  @bind="occupation" placeholder="Occupation"></textarea>
     <textarea  @bind="city" placeholder="Where do you live"></textarea>
-  </div>
-
-<div class="photo3">
-    <img src=" https://media.revistagq.com/photos/5ed5285ef95b900ced636e6d/2:3/w_2675,h_4013,c_limit/GettyImages-619394704.jpg" class="photo3size">
-    </div>
-
-    <div class="way">
-      <h3>Description..:</h3>
+<h3>Description..:</h3>
       <textarea  @bind="description" placeholder="Find something that really like you on a date"></textarea>
-     
-    </div>
+<a href="#top">Go up</a>
 
-
-<div class="botones">
-  <button class="one" onclick="handleHeartClick()">
-    <img src="https://images.vexels.com/media/users/3/217128/isolated/lists/6b516b513468633bbbdb74f551dc6d26-diseno-de-dibujo-lineal-de-corazones-superpuestos.png" alt="Descripción de la imagen">
-  </button>
-  <button class="one" onclick="handleCloseClick()">
-    <img src="https://cdn0.iconfinder.com/data/icons/octicons/1024/x-512.png" alt="Descripción de la imagen">
-  </button>
-</div>
-<p>Logged-in User ID: @userId</p>
-<nav>
-    <ul>
-        <li><a href="event.html">Events</a></li>
-        <hr>
-        <li><a href="messages.html">Messages</a></li>
-        <hr>
-        <li><a href="manageprofile.html"> Profile</a></li>
-        <hr>
-        <li><a href="principalpage.html"> Principal</a></li>
-        <hr>
-    </ul>
-</nav>
-<div class="boton-centrado">
-    <a href="#top">Go up</a>
-  </div>
 @code {
   private Task<UserDomainModel> userDomain;
   private string resultMsg = "";
@@ -94,6 +32,7 @@
   private Task<IEnumerable<MatchDomainModel>> listOfMatchs;
   private int userId;
   private int index = 0;
+  private int userTomatch;
   
   [CascadingParameter]
   public Task<AuthenticationState> AuthState { get; set; } = null!;
@@ -103,28 +42,47 @@
 
   protected override async Task OnInitializedAsync()
   {
+    
     AuthenticationState authState = await AuthState;
-    ClaimsPrincipal user = authState.User;
-    isLoggedIn = user.Identity != null;
-        
+    ClaimsPrincipal user1 = authState.User;
+    bool isLoggedIn = user1.Identity != null;
+
     if (!isLoggedIn) return;
-        
-    userClaims = user.Claims;
-    name = user.Identity!.Name;
-    //userDomain = userService.findByUsername(name);
-    userId = userDomain.Id;
+    string name = user1.Identity!.Name;
+    names = name;
+    UserDomainModel users = await userService.findByUsername(names);
+    userId = users.Id;
+    findUserToMatch(userId);
+    //showUser(users);
+  }
 
-  // Get the ID claim value of the logged-in user
-  /*Claim idClaim = userClaims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-    if (idClaim != null && int.TryParse(idClaim.Value, out int selectuserId))
+  private async void findUserToMatch(int id)
+  {
+    userTomatch = 5;
+    IEnumerable<MatchDomainModel> matches = await matchSevice.findByUserId(userId);
+    MatchDomainModel match = matches.ElementAt(index);
+    int matchingUser = 0;
+    userTomatch = 4;
+  /*if (match.userid1 == userId)
     {
-      userId = selectuserId;
-    }*/
-  /*listOfMatchs = matchSevice.findByUserId(userId);
-    note= userId.ToString();
-    description= userId.ToString();
-    occupation= userId.ToString();
-    city= userId.ToString();*/
+      matchingUser = match.userid2;
+    }
+    else
+    {
+      matchingUser = match.userid1;
+    }
+    userTomatch = matchingUser;
+    UserDomainModel userDomainModel =await userService.findById(matchingUser);
+    return userDomainModel ;*/
+  }
 
+  private void showUser(UserDomainModel userToShow)
+  {
+    note = userToShow.Note;
+    occupation = userToShow.Occupation;
+    names = userToShow.FirstName;
+    lastname = userToShow.LastName;
+    city = userToShow.City;
+    description = userToShow.Description;
   }
 }

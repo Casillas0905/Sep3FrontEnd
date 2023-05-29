@@ -7,7 +7,6 @@
 
 <button class="btn btn-primary" @onclick="GetUserData">Get User Data</button>
 <p>Logged-in User ID: @userId</p>
-<p>UserName: @username2</p>
 <p>UserName: @username</p>
 
 <div class="boton-centrado">
@@ -18,7 +17,6 @@
     private Task<IEnumerable<UserDomainModel>> userDomain;
     private int userId;
     private string username;
-    private string username2;
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } = null!;
@@ -36,9 +34,8 @@
         string name = user1.Identity!.Name;
         username = name;
         UserDomainModel users = await userService.findByUsername(username);
-        username2 = "iker2";
         userId = users.Id;
-        username2 = users.Username;
+        
         
     }
 }
