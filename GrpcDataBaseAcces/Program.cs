@@ -3,13 +3,14 @@
 using Domain.Models;
 using Grpc.Net.Client;
 using GrpcClasses.Event;
+using GrpcClasses.Message;
 using GrpcClasses.User;
 
 Console.WriteLine("Hello, World!");
 var channel = GrpcChannel.ForAddress("http://localhost:8080");
-var eventClient = new UserGrpc.UserGrpcClient(channel);
+var messageClient = new Messages.MessagesClient(channel);
 //var logic= new UserLogic
-var input = new EventModel() { Id = 78, Description = "me llamo juan", MadeById = 1, Title = "mi culo" };
+var input = new MessageDomainModel() {id = 1,userSentId = 4,message = "hola"};
 var user = new UserModel() {
     //Id = 5, 
     Username = "iker4",
@@ -35,8 +36,11 @@ var user = new UserModel() {
     Drink = true,
     Administrator = false
 };
-eventClient.saveUserAsync(user);
+//eventClient.saveUserAsync(user);
 //var reply = eventClient.saveEventAsync(input);
+var req = new ChatIdRequested() { ChatId = 1 };
+
+Console.WriteLine(messageClient.findAllMessagesForAChat(req));
 Console.WriteLine("methods done");
 //var reply2 = await userClient.saveUserAsync(user);
 //Console.WriteLine(reply2.ToString());

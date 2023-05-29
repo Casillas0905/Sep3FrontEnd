@@ -79,4 +79,19 @@ public class EventsController : ControllerBase
         }
     }
     
+    [HttpGet, Route("findAll")]
+    public async Task<ActionResult<IEnumerable<EventDomainModel>>> GetByAllAsync()
+    {
+        try
+        {
+            IEnumerable<EventDomainModel> events= await eventLogic.findAllEvents();
+            return Ok(events);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
 }

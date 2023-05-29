@@ -37,7 +37,7 @@ public class MessageController : ControllerBase
     {
         try
         {
-            Task<IEnumerable<MessageDomainModel>> messages = messageLogic.findAllMessagesForAChat(id);
+            IEnumerable<MessageDomainModel> messages = await messageLogic.findAllMessagesForAChat(id);
             return Ok(messages);
         }
         catch (Exception e)
@@ -46,7 +46,7 @@ public class MessageController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-    
+
     [HttpGet, Route("findById")]
     public async Task<ActionResult<MessageDomainModel>> GetByIdAsync([FromQuery] int id)
     {
