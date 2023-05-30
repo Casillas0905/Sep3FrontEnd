@@ -1,0 +1,44 @@
+﻿@page "/Chats"
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject IChatService ChatService
+
+<h3>Chats</h3>
+
+@if (chats != null && chats.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var chat in chats)
+            {
+                <tr>
+                    <td>@chat.userId1</td>
+                    <td>@chat.userId2</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No chats found.</p>
+}
+
+@code {
+    private IEnumerable<ChatDomainModel> chats;
+
+    protected override async Task OnInitializedAsync()
+    {
+        int userId1 = 1;
+        int userId2 = 2;
+        
+        chats = await ChatService.findByUserId(userId1);
+        
+    }
+}

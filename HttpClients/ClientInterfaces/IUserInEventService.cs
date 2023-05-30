@@ -1,6 +1,6 @@
 ﻿namespace HttpClients.ClientInterfaces;
 
-public class IUserInEventService
+public interface IUserInEventService
 {
     
 }

@@ -1,0 +1,70 @@
+﻿@page "/ViewOneEvent"
+@using Domain.Models
+@using System.Security.Claims
+@using HttpClients.ClientInterfaces
+@inject IEventService EventService
+<h3>View Event</h3>
+
+
+    @if (!string.IsNullOrEmpty(msg))
+    {
+        <label style="color: red">@msg</label>
+    }
+
+<h5>Title:@evt.title</h5>
+<label>Description: @evt.description</label>
+<br/>
+
+
+
+<label>Participate:</label>
+ 
+    <div class="button-row">
+        @if (!string.IsNullOrEmpty(msg))
+        {
+            <label style="color : @color">@msg</label>
+        }
+        <button class="acceptbtn">Join</button>
+    </div>
+
+@code {
+
+    //[Parameter]
+    public int postId;
+    private string msg = "";
+    private EventDomainModel evt;
+    private string message = "";
+    private int messageid;
+    private string color = "";
+    
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    private string? name;
+    private IEnumerable<Claim>? userClaims;
+    private bool isLoggedIn;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        msg = "";
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user = authState.User;
+        isLoggedIn = user.Identity != null;
+        
+        if (!isLoggedIn) return;
+        
+        userClaims = user.Claims;
+        name = user.Identity!.Name!;
+        
+        try
+        {
+            int postid = EventService.id ;
+            evt = await EventService.findById(postid);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+    
+}

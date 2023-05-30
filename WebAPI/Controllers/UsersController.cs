@@ -82,4 +82,20 @@ public class UsersController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpPatch, Route("update")]
+    public async Task<ActionResult<UserDomainModel>> UpdateAsync([FromBody] UserDomainModel userDomainModel)
+    {
+        try
+        {
+            userLogic.updateUser(userDomainModel);
+            return Created($"/match/{userDomainModel.Id}", userDomainModel);
+            
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 }

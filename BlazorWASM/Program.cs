@@ -17,6 +17,10 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https:/
 builder.Services.AddScoped<IUserService, UserHttpClient>();
 builder.Services.AddScoped<IMatchService, MatchHttpClient>();
 builder.Services.AddScoped<IAuthService, JwtAuthService>();
+builder.Services.AddScoped<IMessagesService, MessageHttpClient>();
+builder.Services.AddScoped<IEventService, EventHttpClient>();
+builder.Services.AddScoped<IChatService, ChatHttpClient>();
+builder.Services.AddScoped<IEventService, EventHttpClient>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
 AuthorizationPolicies.AddPolicies(builder.Services);
 

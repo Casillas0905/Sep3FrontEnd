@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using Domain.Models;
 using HttpClients.ClientInterfaces;
@@ -79,5 +80,18 @@ public class UserHttpClient : IUserService
             PropertyNameCaseInsensitive = true
         })!;
         return user;
+    }
+
+    public async void updateUser(UserDomainModel userDomainModel)
+    {
+        string adressAsJson = JsonSerializer.Serialize(userDomainModel);
+        StringContent body = new StringContent(adressAsJson, Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await client.PatchAsync("https://localhost:7093/Users/update", body);
+        string result = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            throw new Exception(content);
+        }
     }
 }

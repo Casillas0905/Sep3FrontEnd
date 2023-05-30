@@ -1,0 +1,178 @@
+﻿@page "/EditProfile"
+@using System.Security.Claims
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject IUserService UserService
+@attribute [Authorize]
+<h3>EditProfile</h3>
+<body>
+
+
+<div class="container"/>
+<div class="profile">
+	<img src="https://companynewheroes.com/wp-content/blogs.dir/18/files/2019/09/Lucas-De-Man-Fotograaf-Anne-Harbers-2-1024x683.jpg" alt="Profile picture">
+	<p>@names </p>
+</div>
+<div class="form">
+	<form>
+		<label for="language">Language:</label>
+		<br>
+		<select id="language" name="language">
+			<option value="german">German</option>
+			<option value="english">English</option>
+			<option value="spanish">Spanish</option>
+			<option value="danish">Danish</option>
+		</select>
+		<br>
+		<br>
+		<h2>Select your interests:</h2>
+		<div class="interests-box">
+			<div class="options-box">
+				<div class="option">Travel</div>
+				<div class="option">Clothes</div>
+				<div class="option">Netflix</div>
+				<div class="option">Food</div>
+				<div class="option">Fitness</div>
+				<div class="option">Books</div>
+				<div class="option">Music</div>
+				<div class="option">Sports</div>
+				<div class="option">Eating out</div>
+			</div>
+			<h3 id="text">Interests selected</h3>
+			<div class="selected-box">
+				<div class="selected-items"></div>
+			</div>
+		</div>
+		<div class="about-me">
+			<h3>About Me</h3>
+			<div class="horoscope">
+				<label @bind="horoscope" @bind:event="onselect" for="horoscope">Horoscope:</label>
+				<select id="horoscope" name="horoscope">
+					<option value="Aries">Aries</option>
+					<option value="Taurus">Taurus</option>
+					<option value="Gemini">Gemini</option>
+					<option value="Cancer">Cancer</option>
+					<option value="Leo">Leo</option>
+					<option value="Virgo">Virgo</option>
+					<option value="Libra">Libra</option>
+					<option value="Scorpio">Scorpio</option>
+					<option value="Sagittarius">Sagittarius</option>
+					<option value="Capricorn">Capricorn</option>
+					<option value="Aquarius">Aquarius</option>
+					<option value="Pisces">Pisces</option>
+				</select>
+			</div>
+			<div class="education-options">
+				<label @bind="education" @bind:event="onselect" for="education">Education</label>
+				<select id="education" name="education">
+					<option value="High School">High School</option>
+					<option value="College">College</option>
+					<option value="Bachelor degree">Bachelor degree</option>
+					<option value="PhD">PhD</option>
+				</select>
+			</div>
+			<div class="drink-options">
+				<label @bind="drink" @bind:event="onselect" for="drink">Do you drink?</label>
+				<select id="drink" name="drink">
+					<option value="yes">Yes</option>
+					<option value="no">No</option>
+				</select>
+			</div>
+			<label for="city">City:</label>
+			<br>
+			<input type="text" id="city" @bind="city"@bind:event="oninput" name="city">
+			<br>
+			<br>
+			<label for="pets">Pets:</label>
+			<br>
+			<label>
+				<input type="checkbox" name="pets" value="yes">Yes
+			</label>
+			<br>
+			<label>
+				<input type="checkbox" name="pets" value="no">No
+			</label>
+			<br>
+			<br>
+		</div>
+	</form>
+	<div class="form-container">
+		<form>
+			<div class="description">
+				<label for="description" >Description:</label>
+				<br>
+				<textarea id="description" @bind="description" @bind:event="oninput" name="description"></textarea>
+			</div>
+			<div class="description">
+				<label for="note">Note:</label>
+				<br>
+				<textarea @bind="note" @bind:event="oninput" id="note" name="note"></textarea>
+				<button @onclick="Update">Update</button>
+			</div>
+			@if (!string.IsNullOrEmpty(errorLabel))
+                        {
+                            <div class="field">
+                                <label style="color: red">
+                                    @errorLabel
+                                </label>
+                            </div>
+                        }
+		</form>
+	</div>
+</div>
+<div class="button-container">
+	<button onclick="location.href='deleteacc.html'">Delete Account</button>
+	<button onclick="location.href='newpassword.html'">New Password</button>
+</div>
+</body>
+
+@code {
+	private string horoscope;
+	private bool drink;
+	private string city;
+	private string description;
+	private string note;
+	private string names;
+	private string errorLabel;
+	private string education;
+	
+	[CascadingParameter]
+	public Task<AuthenticationState> AuthState { get; set; } = null!;
+	private string? name;
+	private IEnumerable<Claim>? userClaims;
+	private bool isLoggedIn;
+	UserDomainModel users;
+	
+	protected override async Task OnInitializedAsync()
+	{
+    
+		AuthenticationState authState = await AuthState;
+		ClaimsPrincipal user1 = authState.User;
+		bool isLoggedIn = user1.Identity != null;
+
+		if (!isLoggedIn) return;
+		string name = user1.Identity!.Name;
+		users = await UserService.findByUsername(name);
+		names = name;
+		note= users.Note;
+		description= users.Description;
+		city= users.City;
+		drink= users.Drink;
+		horoscope= users.Horoscope;
+		education = users.Education;
+	}
+
+	private async Task Update()
+	{
+		UserDomainModel userDomainModel = users;
+		userDomainModel.Description = users.Description;
+		userDomainModel.Drink = users.Drink;
+		userDomainModel.Note = users.Note;
+		userDomainModel.City = users.City;
+		userDomainModel.Horoscope = users.Horoscope;
+		userDomainModel.Education = users.Education;
+		UserService.updateUser(userDomainModel);
+		errorLabel = "user update";
+	}
+}
+

@@ -1,0 +1,67 @@
+﻿@page "/ViewEvents"
+@using HttpClients.ClientInterfaces
+@using Domain.Models
+@using System.Security.Claims
+@inject IEventService EventService
+@inject IUserService UserService
+@inject NavigationManager NavigationManager
+<h3>View Events</h3>
+
+@if (events != null)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var evt in events)
+            {
+                <tr>
+                    <td>@evt.title</td>
+                    <td>@evt.description</td>
+                    <button postId=@evt.id.ToString() @onclick="() => goToPosts(evt.id)" class="postButton">Go to this event</button>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No events found.</p>
+}
+
+@code {
+    private IEnumerable<EventDomainModel> events;
+    
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    private string? name;
+    private IEnumerable<Claim>? userClaims;
+    private bool isLoggedIn;
+    private String names;
+    private int userId;
+
+    protected override async Task OnInitializedAsync()
+    {
+    
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user1 = authState.User;
+        bool isLoggedIn = user1.Identity != null;
+
+        if (!isLoggedIn) return;
+        string name = user1.Identity!.Name;
+        names = name;
+        UserDomainModel users = await UserService.findByUsername(names);
+        userId = users.Id;
+        events = await EventService.findAllEvents();
+    }
+    
+    private async Task goToPosts(int id)
+    {
+        EventService.id = id;
+        NavigationManager.NavigateTo("/ViewOneEvent");
+    }
+}

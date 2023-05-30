@@ -1,0 +1,41 @@
+﻿@page "/Events"
+@using HttpClients.ClientInterfaces
+@using Domain.Models
+@using System.Security.Claims
+@inject IEventService EventService
+@inject IUserService UserService
+<h3>Events</h3>
+<label for="name">Title:</label>
+<br>
+<input type="text" id="email" name="email" @bind="title" @bind:event="oninput">
+<br>
+<label for="name">Description:</label>
+<br>
+<input type="text" id="email" name="email" @bind="description" @bind:event="oninput">
+<button @onclick="Create" disabled="@(string.IsNullOrEmpty(title))" class="acceptbtn">Create</button>
+
+@code {
+    private string title = "";
+    private string description = "";
+    
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    private string? name;
+    private IEnumerable<Claim>? userClaims;
+    private bool isLoggedIn;
+    
+    private async Task Create()
+    {
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user1 = authState.User;
+        bool isLoggedIn = user1.Identity != null;
+
+        if (!isLoggedIn) return;
+        string name = user1.Identity!.Name;
+        UserDomainModel users = await UserService.findByUsername(name);
+        EventDomainModel events = new EventDomainModel(0, description, title, users.Id);
+        EventService.saveEvent(events);
+        description = "";
+        title = "";
+    }
+}
