@@ -22,7 +22,6 @@ public class UserLogic : IUserLogic
             Console.WriteLine("User take");
             throw new Exception("Username already taken");
         }
-        //ValidateData(userDomainModel);
         Service.saveUser(userDomainModel);
     }
 
