@@ -98,4 +98,20 @@ public class UsersController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpDelete, Route("deleteUser")]
+    public async Task<ActionResult<MatchDomainModel>> DeleteAsync([FromQuery] int id)
+    {
+        try
+        {
+            UserDomainModel user = userLogic.findById(id);
+            userLogic.deleteUser(user.Id);
+            return Ok($"/delete/{user.Id}");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 }

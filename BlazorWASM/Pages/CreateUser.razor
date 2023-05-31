@@ -60,6 +60,17 @@
 			<div class="description">
 				<label for="note">Note:</label><br>
 				<textarea id="note" name="note" @bind="note" @bind:event="oninput"></textarea>
+				<label for="photo1">Link photo 1:</label><br>
+				<textarea id="photo1" name="photo1" @bind="photo1" @bind:event="oninput"></textarea>
+				<label for="photo2">Link photo 2:</label><br>
+				<textarea id="photo2" name="photo2" @bind="photo2" @bind:event="oninput"></textarea>
+				<label for="photo3">Link photo 3:</label><br>
+				<textarea id="photo3" name="photo3" @bind="photo3" @bind:event="oninput"></textarea>
+				<label for="photo4">Link photo 4:</label><br>
+				<textarea id="photo4" name="photo4" @bind="photo4" @bind:event="oninput"></textarea>
+				<label for="photo5">Link photo 5:</label><br>
+				<textarea id="photo5" name="photo5" @bind="photo5" @bind:event="oninput"></textarea>
+				
     	
 				<div class="about-me">
     				
@@ -142,11 +153,11 @@
 	private string description = "";
 	private int numberofMatches = 0;
 	private string note = "";
-	private string photo1 = "photo";
-	private string photo2 = "photo";
-	private string photo3 = "photo";
-	private string photo4 = "photo";
-	private string photo5 = "photo";
+	private string photo1 = "";
+	private string photo2 = "";
+	private string photo3 = "";
+	private string photo4 = "";
+	private string photo5 = "";
 	private string gender = "";
 	private string preference = "";
 	private string horoscope = "";
