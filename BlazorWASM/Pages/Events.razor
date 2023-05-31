@@ -4,6 +4,7 @@
 @using System.Security.Claims
 @inject IEventService EventService
 @inject IUserService UserService
+@attribute [Authorize]
 <h3>Events</h3>
 <label for="name">Title:</label>
 <br>

@@ -2,7 +2,7 @@
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @inject IChatService ChatService
-
+@attribute [Authorize]
 <h3>Chats</h3>
 
 @if (chats != null && chats.Any())

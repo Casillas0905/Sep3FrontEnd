@@ -11,6 +11,7 @@
     <list default="true" id="1cc91d3c-8f69-4944-bdaa-1d3b7780fdee" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Assigment3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Assigment3/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BlazorWASM/Pages/CreateUser.razor" beforeDir="false" afterPath="$PROJECT_DIR$/BlazorWASM/Pages/CreateUser.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BlazorWASM/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/BlazorWASM/Pages/Index.razor" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

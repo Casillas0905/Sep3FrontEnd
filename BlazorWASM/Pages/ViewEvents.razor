@@ -5,6 +5,7 @@
 @inject IEventService EventService
 @inject IUserService UserService
 @inject NavigationManager NavigationManager
+@attribute [Authorize]
 <h3>View Events</h3>
 
 @if (events != null)
@@ -12,7 +13,7 @@
     <table>
         <thead>
             <tr>
-                <th>Title</th>
+                <th>Title                        </th>
                 <th>Description</th>
             </tr>
         </thead>
