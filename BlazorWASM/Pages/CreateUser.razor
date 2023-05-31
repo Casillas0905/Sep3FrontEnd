@@ -3,7 +3,7 @@
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @inject IUserService userService;
-
+@inject NavigationManager NavigationManager
 <div class="all">
 	<div class="questions">
         <h1>Create Account</h1>
@@ -196,6 +196,7 @@
 	        education = "";
 	        resultMsg = "User successfully created";
             color = "green";
+	        NavigationManager.NavigateTo("/LogIn");
         }
         catch (Exception e)
         {
